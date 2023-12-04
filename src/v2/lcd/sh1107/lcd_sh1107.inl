@@ -173,7 +173,41 @@ static const PROGMEM uint8_t s_SH1107_lcd128x64_initData[] = {
 #ifdef SDL_EMULATION
     SDL_LCD_SH1107, 0x00, 0x00, 0x00,
 #endif
-    0xAE,           0x00,       // display off
+    0xAE, // Display OFF (sleep mode)
+
+    // Start Line and Column Address Setting Commands
+    0x00, // Lower Column Start Address for Page Addressing Mode
+    0x10, // Higher Column Start Address for Page Addressing Mode
+
+    0x40, // Set Display Start Line (0x40 - 0x7F)
+
+    0x81, 0x80, // Set Contrast Control
+    0xA1, // Segment Re-map (A0/A1) - Column Address 127 is mapped to SEG0
+    0xC0, // Set COM Output Scan Direction (C0/C8)
+
+    0xA6, // Set Normal Display (A6/A7)
+
+    0xA8, 0x3F, // Set Multiplex Ratio (1 to 64)
+
+    // Display Offset and Clock Divide Ratio/Oscillator Frequency Commands
+    0xD3, 0x00, // Set Display Offset (00-3F)
+    0xD5, 0x80, // Set Display Clock Divide Ratio/Oscillator Frequency
+
+    0xD9, 0xF1, // Set Pre-charge Period
+
+    0xDA, 0x12, // Set COM Pins Hardware Configuration
+
+    0xDB, 0x40, // Set VCOM Deselect Level
+
+    0x20, 0x02, // Set Page Addressing Mode (0x00/0x01/0x02)
+
+    0xA4, // Entire Display ON (A4/A5 - resume to RAM content display)
+
+    0xA6, // Normal/Inverse Display (A6/A7)
+
+    0xAF // Display ON in normal mode
+
+    /*0xAE,           0x00,       // display off
     0xC8,           0x00,       // Scan from 127 to 0 (Reverse scan)
     0xDC,           0x01, 0x00, // First line to start scanning from
     0x81,           0x01, 0x80, // contast value to 0x2F according to datasheet
@@ -188,7 +222,7 @@ static const PROGMEM uint8_t s_SH1107_lcd128x64_initData[] = {
     0xDB,           0x01, 0x40, // vcom deselect to 0x20 // 0x40
     0x8D,           0x01, 0x14, // Enable charge pump
     0xA4,           0x00,       // Display on resume
-    0xAF,           0x00,       // Display on
+    0xAF,           0x00,       // Display on*/
 };
 
 ////////////////////////////////////////////////////////////////////////////////
