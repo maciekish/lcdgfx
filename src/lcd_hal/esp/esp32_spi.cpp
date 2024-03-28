@@ -64,14 +64,13 @@ EspSpi::~EspSpi()
 
 void EspSpi::begin()
 {
-    // Use VSPI by default
-    if ( m_busId < 0 )
-        m_busId = 1;
+    m_busId = SPI3_HOST;
+    m_mosi = 35;
+    m_clk = 36;
+    m_cs = 34;
+    m_dc = 38;
+    m_frequency = 40000000;
 
-    if ( m_mosi < 0 )
-        m_mosi = m_busId ? 23 : 13;
-    if ( m_clk < 0 )
-        m_clk = m_busId ? 18 : 14;
     if ( m_cs >= 0 )
     {
         lcd_gpioMode(m_cs, LCD_GPIO_OUTPUT);
